@@ -1,52 +1,55 @@
 #include <iostream>
 #include <string>
 #include <stack>
+
 using namespace std;
- 
-int main() {
-    while (true) {
-        string input;
-        getline(cin, input);
- 
-        if (input == ".") {
-            break;
-        }
- 
-        stack<char> s;
-        bool flag = 0;
-        for (int i = 0; i < input.length(); i++) {
-            char c = input[i];
-                
-            if ((c == '(') || (c == '[')) {
-                s.push(c);
-            }
-            else if (c == ')') {
-                if (!s.empty() && s.top() == '(') {
-                    s.pop();
-                }
-                else {
-                    flag = 1;
-                    break;
-                }
-            }
-            else if (c == ']') {
-                if (!s.empty() && s.top() == '[') {
-                    s.pop();
-                }
-                else {
-                    flag = 1;
-                    break;
-                }
-            }
-        }
- 
-        if (flag==0 && s.empty()) {
-            cout << "yes" << endl;
-        }
-        else {
-            cout << "no" << endl;
-        }
- 
-    }
- 
+
+int main()
+{
+	string str = " ";
+
+	while (true)
+	{
+		bool correct = true;
+		stack<char> stack;
+		getline(cin, str);
+
+		if (str.compare(".") == 0)
+			break;
+
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (str.at(i) == '(')
+				stack.push('(');
+			else if (str.at(i) == '[')
+				stack.push('[');
+			else if (str.at(i) == ')')
+			{
+				if (!stack.empty() && stack.top() == '(')
+					stack.pop();
+				else
+				{
+					correct = false;
+					break;
+				}
+			}
+			else if (str.at(i) == ']')
+			{
+				if (!stack.empty() && stack.top() == '[')
+					stack.pop();
+				else
+				{
+					correct = false;
+					break;
+				}
+			}
+		}
+
+		if (correct && stack.empty())
+			cout << "yes" << '\n';
+		else
+			cout << "no" << '\n';
+	}
+
+	return 0;
 }
