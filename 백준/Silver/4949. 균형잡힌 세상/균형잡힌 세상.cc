@@ -4,52 +4,49 @@
 
 using namespace std;
 
-int main()
+int main() 
 {
-	string str = " ";
-
 	while (true)
 	{
-		bool correct = true;
-		stack<char> stack;
-		getline(cin, str);
+		string input;
+		getline(cin, input);
 
-		if (str.compare(".") == 0)
+		if (input == ".")
 			break;
 
-		for (int i = 0; i < str.length(); i++)
+		stack<char> s;
+		bool flag = 0;
+		for (int i = 0;i < input.length(); i++)
 		{
-			if (str.at(i) == '(')
-				stack.push('(');
-			else if (str.at(i) == '[')
-				stack.push('[');
-			else if (str.at(i) == ')')
+			char c = input[i];
+			if (c == '(' || c == '[')
 			{
-				if (!stack.empty() && stack.top() == '(')
-					stack.pop();
+				s.push(c);
+			}
+			else if (c == ')')
+			{
+				if (!s.empty() && s.top() == '(')
+					s.pop();
 				else
 				{
-					correct = false;
+					flag = 1;
 					break;
 				}
 			}
-			else if (str.at(i) == ']')
+			else if (c == ']')
 			{
-				if (!stack.empty() && stack.top() == '[')
-					stack.pop();
+				if (!s.empty() && s.top() == '[')
+					s.pop();
 				else
 				{
-					correct = false;
+					flag = 1;
 					break;
 				}
 			}
 		}
-
-		if (correct && stack.empty())
-			cout << "yes" << '\n';
+		if (flag == 0 && s.empty())
+			cout << "yes" << endl;
 		else
-			cout << "no" << '\n';
+			cout << "no" << endl;
 	}
-
-	return 0;
 }
